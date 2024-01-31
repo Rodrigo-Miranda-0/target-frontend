@@ -1,59 +1,36 @@
 import { registerUser } from "../../services/userService";
 import ButtonComponent from "../common/ButtonComponent";
 import { FormEvent, useState } from "react";
+import InputField from "../common/InputField";
 
 function SignUpForm() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirm] = useState("");
-  const [gender, setGender] = useState("");
+  const [userData, setUserData] = useState({
+    firstName: "",
+    lastName: "",
+    userName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [registrationError, setRegistrationError] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
-  const handleFirstNameChange = (e: FormEvent<HTMLInputElement>) => {
-    setFirstName(e.currentTarget.value);
-  };
-
-  const handleLastNameChange = (e: FormEvent<HTMLInputElement>) => {
-    setLastName(e.currentTarget.value);
-  };
-
-  const handleUsernameChange = (e: FormEvent<HTMLInputElement>) => {
-    setUsername(e.currentTarget.value);
-  };
-
-  const handleEmailChange = (e: FormEvent<HTMLInputElement>) => {
-    setEmail(e.currentTarget.value);
-  };
-
-  const handlePasswordChange = (e: FormEvent<HTMLInputElement>) => {
-    setPassword(e.currentTarget.value);
-  };
-
-  const handleConfirmPasswordChange = (e: FormEvent<HTMLInputElement>) => {
-    setConfirm(e.currentTarget.value);
-  };
-
-  const handleGenderChange = (e: FormEvent<HTMLSelectElement>) => {
-    setGender(e.currentTarget.value);
+  const handleUserData = (
+    e: FormEvent<HTMLInputElement | HTMLSelectElement>,
+    field: string
+  ) => {
+    setUserData({ ...userData, [field]: e.currentTarget.value });
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     if (
-      firstName === "" ||
-      lastName === "" ||
-      username === "" ||
-      email === "" ||
-      password === "" ||
-      gender === "" ||
-      confirmPassword != password
+      Object.values(userData) ||
+      userData.confirmPassword != userData.password
     ) {
       setError(true);
       return;
@@ -61,20 +38,20 @@ function SignUpForm() {
       setError(false);
       setIsLoading(true);
 
-      const userData = {
+      const formData = {
         user: {
-          first_name: firstName,
-          last_name: lastName,
-          username,
-          email,
-          password,
-          password_confirmation: confirmPassword,
-          gender,
+          first_name: userData.firstName,
+          last_name: userData.lastName,
+          username: userData.userName,
+          email: userData.email,
+          password: userData.password,
+          password_confirmation: userData.confirmPassword,
+          gender: userData.gender,
         },
       };
 
       try {
-        const response = await registerUser(userData);
+        const response = await registerUser(formData);
         console.log(response);
         setRegistrationSuccess(true);
         // Redirect to confirmation sent page
@@ -93,77 +70,43 @@ function SignUpForm() {
         <div className="text-black text-3xl font-bold tracking-[3px] self-center">
           SIGN UP
         </div>
-        <div className="text-black text-center text-xs font-semibold tracking-widest self-center mt-5">
-          <label htmlFor="firstName"> FIRST NAME </label>
-          <input
-            id="firstName"
-            type="text"
-            className="self-stretch flex shrink-0 h-[37px] flex-col mt-2 border-[0.5px] border-solid border-zinc-950 p-3"
-            aria-label="Name"
-            onChange={handleFirstNameChange}
-          />
-        </div>
-        <div className="text-black text-center text-xs font-semibold tracking-widest self-center mt-5">
-          <label htmlFor="lastName"> LAST NAME </label>
-          <input
-            id="lastName"
-            type="text"
-            className="self-stretch flex shrink-0 h-[37px] flex-col mt-2 border-[0.5px] border-solid border-zinc-950 p-3"
-            aria-label="Name"
-            onChange={handleLastNameChange}
-          />
-        </div>
-        <div className="text-black text-center text-xs font-semibold tracking-widest self-center mt-5">
-          <label htmlFor="username"> USERNAME </label>
-          <input
-            id="username"
-            type="text"
-            className="self-stretch flex shrink-0 h-[37px] flex-col mt-2 border-[0.5px] border-solid border-zinc-950 p-3"
-            aria-label="Name"
-            onChange={handleUsernameChange}
-            autoComplete="new-username"
-          />
-        </div>
-        <div className="text-black text-center text-xs font-semibold tracking-widest self-center mt-5">
-          <label htmlFor="email"> EMAIL </label>
-          <input
-            id="email"
-            type="email"
-            className="self-stretch flex shrink-0 h-[37px] flex-col mt-2 border-[0.5px] border-solid border-zinc-950 p-3"
-            aria-label="Email"
-            onChange={handleEmailChange}
-            autoComplete="new-email"
-          />
-        </div>
-        <div className="text-black text-center text-xs font-semibold tracking-widest self-center mt-5">
-          <label htmlFor="password"> PASSWORD </label>
-          <input
-            id="password"
-            type="password"
-            className="self-stretch flex shrink-0 h-[37px] flex-col mt-2 border-[0.5px] border-solid border-zinc-950 p-3"
-            aria-label="Password"
-            onChange={handlePasswordChange}
-            autoComplete="new-password"
-          />
-        </div>
-        <div className="text-black text-center text-xs font-semibold tracking-widest self-center mt-5">
-          <label htmlFor="confirmPassword"> CONFIRM PASSWORD </label>
-          <input
-            id="confirmPassword"
-            type="password"
-            className="self-stretch flex shrink-0 h-[37px] flex-col mt-2 border-[0.5px] border-solid border-zinc-950 p-3"
-            aria-label="Confirm Password"
-            onChange={handleConfirmPasswordChange}
-            autoComplete="new-password"
-          />
-        </div>
+        <InputField
+          label="FIRST NAME"
+          htmlLabel="firstName"
+          onChange={(e) => handleUserData(e, "firstName")}
+        />
+        <InputField
+          label="LAST NAME"
+          htmlLabel="lastName"
+          onChange={(e) => handleUserData(e, "lastName")}
+        />
+        <InputField
+          label="USERNAME"
+          htmlLabel="userName"
+          onChange={(e) => handleUserData(e, "userName")}
+        />
+        <InputField
+          label="EMAIL"
+          htmlLabel="email"
+          onChange={(e) => handleUserData(e, "email")}
+        />
+        <InputField
+          label="PASSWORD"
+          htmlLabel="password"
+          onChange={(e) => handleUserData(e, "password")}
+        />
+        <InputField
+          label="CONFIRM PASSWORD"
+          htmlLabel="confirmPassword"
+          onChange={(e) => handleUserData(e, "confirmPassword")}
+        />
         <div className="text-black text-center text-xs font-semibold tracking-widest self-center mt-5">
           <label htmlFor="gender"> GENDER </label>
           <select
             id="gender"
             className="self-stretch flex h-[37px] flex-col mt-1.5 border-[0.5px] border-solid border-black w-[175px] shrink-0 text-sm p-2"
             aria-label="Gender"
-            onChange={handleGenderChange}
+            onChange={(e) => handleUserData(e, "gender")}
           >
             <option value="" disabled selected>
               Select your option
