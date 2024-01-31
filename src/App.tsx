@@ -13,7 +13,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         {routes.map(({ path, element }) => (
-          <Route path={path} element={element} />
+          <Route key={path} path={path} element={element} />
         ))}
       </Routes>
     </BrowserRouter>

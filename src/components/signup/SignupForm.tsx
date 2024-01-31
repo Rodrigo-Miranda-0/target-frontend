@@ -29,7 +29,7 @@ function SignUpForm() {
     e.preventDefault();
 
     if (
-      Object.values(userData) ||
+      Object.values(userData).some((value) => value === "") ||
       userData.confirmPassword != userData.password
     ) {
       setError(true);
@@ -73,31 +73,40 @@ function SignUpForm() {
         <InputField
           label="FIRST NAME"
           htmlLabel="firstName"
+          type="text"
           onChange={(e) => handleUserData(e, "firstName")}
         />
         <InputField
           label="LAST NAME"
           htmlLabel="lastName"
+          type="text"
           onChange={(e) => handleUserData(e, "lastName")}
         />
         <InputField
           label="USERNAME"
           htmlLabel="userName"
+          type="text"
+          autocomplete="username"
           onChange={(e) => handleUserData(e, "userName")}
         />
         <InputField
           label="EMAIL"
           htmlLabel="email"
+          type="email"
           onChange={(e) => handleUserData(e, "email")}
         />
         <InputField
           label="PASSWORD"
           htmlLabel="password"
+          type="password"
+          autocomplete="new-password"
           onChange={(e) => handleUserData(e, "password")}
         />
         <InputField
           label="CONFIRM PASSWORD"
           htmlLabel="confirmPassword"
+          type="password"
+          autocomplete="new-password"
           onChange={(e) => handleUserData(e, "confirmPassword")}
         />
         <div className="text-black text-center text-xs font-semibold tracking-widest self-center mt-5">
@@ -108,9 +117,7 @@ function SignUpForm() {
             aria-label="Gender"
             onChange={(e) => handleUserData(e, "gender")}
           >
-            <option value="" disabled selected>
-              Select your option
-            </option>
+            <option value="">Select your option</option>
             <option value="male"> Male </option>
             <option value="female"> Female </option>
             <option value="other"> Other </option>
