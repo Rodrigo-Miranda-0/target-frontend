@@ -2,6 +2,7 @@ import { registerUser } from "../../services/userService";
 import ButtonComponent from "../common/ButtonComponent";
 import { FormEvent, useState } from "react";
 import InputField from "../common/InputField";
+import { Link } from "react-router-dom";
 
 function SignUpForm() {
   const [userData, setUserData] = useState({
@@ -145,7 +146,9 @@ function SignUpForm() {
           REGISTRATION SUCCESS!
         </p>
         <hr className="h-0.5 border-none bg-black mt-6 w-2/3 self-center" />
-        <p className="self-center text-xs, mt-3 font-semibold">SIGN IN</p>
+        <Link to="/login" className="self-center text-xs, mt-3 font-semibold">
+          SIGN IN
+        </Link>
       </div>
     </form>
   );

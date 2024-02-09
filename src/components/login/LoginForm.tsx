@@ -1,30 +1,36 @@
+import { useForm, SubmitHandler } from "react-hook-form";
+import InputFieldLogin from "./InputFieldLogin";
+import { loginUser } from "../../services/userService";
+import ButtonComponent from "../common/ButtonComponent";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+interface IFormValues {
+  email: string;
+  password: string;
+}
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const { register, handleSubmit } = useForm<IFormValues>();
+  const onSubmit: SubmitHandler<IFormValues> = (data) => handleLogin(data);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loginError, setLoginError] = useState(false);
+  const navigate = useNavigate();
 
-  const onButtonClick = (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-
-    setEmailError("");
-    setPasswordError("");
-
-    if (!email) {
-      setEmailError("Please fill in your email");
-    }
-
-    if (!password) {
-      setPasswordError("Please fill in your password");
-    }
-
-    if (email && password) {
-      console.log("Sign in");
+  const handleLogin = async (data: IFormValues) => {
+    setIsLoading(true);
+    try {
+      const response = await loginUser({ user: data });
+      console.log(response);
+      console.log("User logged in");
+      navigate("/home");
+    } catch (error) {
+      console.error(error);
+      setLoginError(true);
+    } finally {
+      setIsLoading(false);
     }
   };
-
   return (
     <div className="flex w-[321px] flex-col mt-7 self-center">
       <img
@@ -45,57 +51,43 @@ const LoginForm = () => {
         Dating, Music, etc and start connecting with others who share your
         interest.
       </div>
-      <label
-        htmlFor="email"
-        className="text-black text-center text-xs font-semibold tracking-widest self-center mt-10 max-md:mt-10"
+      <form className="self-center flex w-[188px] shrink-0 flex-col mt-1.5">
+        <InputFieldLogin
+          label="email"
+          type="email"
+          register={register}
+          required
+        />
+        <InputFieldLogin
+          label="password"
+          type="password"
+          register={register}
+          required
+        />
+        <ButtonComponent disabled={isLoading} onClick={handleSubmit(onSubmit)}>
+          SIGN IN
+        </ButtonComponent>
+      </form>
+      <a
+        className="text-xs text-center text-red-700 font-semibold mt-5"
+        hidden={!loginError}
       >
-        EMAIL
-      </label>
-      <div className="self-center flex w-[188px] shrink-0 flex-col mt-2 border-[0.5px] border-solid border-black">
-        <input
-          value={email}
-          placeholder="Enter your email"
-          onChange={(ev) => setEmail(ev.target.value)}
-        ></input>
-      </div>
-      <label
-        htmlFor="password"
-        className="text-black text-center text-xs font-semibold tracking-widest self-center mt-7"
-      >
-        PASSWORD
-      </label>
-      <div className="self-center flex w-[188px] shrink-0 flex-col mt-1.5 border-[0.5px] border-solid border-black">
-        <input
-          value={password}
-          placeholder="Enter your password"
-          onChange={(ev) => setPassword(ev.target.value)}
-        ></input>
-      </div>
-      <label className="text-red-500 text-center text-xs font-semibold tracking-widest self-center mt-2">
-        {emailError || passwordError}
-      </label>
-      <button
-        className="text-white text-center text-xs font-semibold tracking-widest bg-black self-center w-[185px] max-w-full justify-center items-center mt-6 px-16 py-4 max-md:px-5"
-        aria-label="Sign In"
-        onClick={onButtonClick}
-      >
-        SIGN IN
-      </button>
+        There was an error logging in, please check your data or try again
+        later.
+      </a>
       <div className="text-black text-center text-xs font-semibold self-center whitespace-nowrap mt-5">
         Forgot your password?
       </div>
       <div className="text-black text-center text-xs font-bold tracking-[2.4px] self-center whitespace-nowrap mt-14 max-md:mt-10">
         CONNECT WITH FACEBOOK
       </div>
-      <img
-        loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/4642bece739ce0e20d59b234d00c820cfdc2e204e299f2a152f4ac0c60fb2e01?apiKey=25151f55545440838c8ceb1b1cff39a3&"
-        className="aspect-[121] object-contain object-center w-[121px] stroke-[0.5px] stroke-black overflow-hidden self-center max-w-full mt-3.5"
-        alt="Image 3"
-      />
-      <div className="text-black text-center text-xs font-semibold tracking-widest self-center mt-5">
+      <hr className="h-0.5 border-none bg-black mt-6 w-2/3 self-center" />
+      <Link
+        to="/signup"
+        className="text-black text-center text-xs font-semibold tracking-widest self-center mt-5"
+      >
         SIGN UP
-      </div>
+      </Link>
     </div>
   );
 };

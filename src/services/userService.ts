@@ -14,3 +14,13 @@ export const registerUser = async (userData: {
   const response = await httpClient.post("/api/v1/users", userData);
   return response.data;
 };
+
+export const loginUser = async (userData: {
+  user: {
+    email: string;
+    password: string;
+  };
+}) => {
+  const response = await httpClient.post("/api/v1/users/sign_in", userData);
+  return response.data;
+};

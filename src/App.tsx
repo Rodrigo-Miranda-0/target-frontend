@@ -1,19 +1,13 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { SIGNUP } from "./constants/api.ts";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import SignupPage from "./pages/SignupPage";
+import { routes } from "./routes/router";
 
 function App() {
-  const routes = [
-    { path: "/", element: <Navigate to={SIGNUP} /> },
-    { path: SIGNUP, element: <SignupPage /> },
-  ];
-
   return (
     <BrowserRouter>
       <Routes>
-        {routes.map(({ path, element }) => (
-          <Route key={path} path={path} element={element} />
+        {routes.map(({ path, component }) => (
+          <Route key={path} path={path} Component={component} />
         ))}
       </Routes>
     </BrowserRouter>
