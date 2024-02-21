@@ -22,7 +22,7 @@ const LoginForm = () => {
     try {
       const response = await loginUser({ user: data });
       console.log(response);
-      console.log("User logged in");
+      localStorage.setItem("token", response.token);
       navigate("/home");
     } catch (error) {
       console.error(error);
