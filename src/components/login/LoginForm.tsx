@@ -20,10 +20,8 @@ const LoginForm = () => {
   const handleLogin = async (data: IFormValues) => {
     setIsLoading(true);
     try {
-      const response = await loginUser({ user: data });
-      console.log(response);
-      localStorage.setItem("token", response.token);
-      navigate("/home");
+      await loginUser({ user: data });
+      navigate("/");
     } catch (error) {
       console.error(error);
       setLoginError(true);

@@ -22,5 +22,7 @@ export const loginUser = async (userData: {
   };
 }) => {
   const response = await httpClient.post("/api/v1/users/sign_in", userData);
-  return response.data;
+  if (response.data) {
+    localStorage.setItem("token", response.data.token);
+  }
 };
