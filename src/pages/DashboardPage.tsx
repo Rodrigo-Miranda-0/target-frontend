@@ -1,7 +1,19 @@
+import { useNavigate } from "react-router-dom";
+import { logoutUser } from "../services/userService";
+import HamburguerMenuSite from "../components/common/HamburgerMenuSite";
+
 function DashboardPage() {
+  const navigate = useNavigate();
+
+  const onbuttonLogout = () => {
+    logoutUser();
+    navigate("/login");
+  };
+
   return (
     <div>
-      <h1>Dashboard</h1>
+      <HamburguerMenuSite />
+      <button onClick={onbuttonLogout}> LOGOUT </button>
     </div>
   );
 }
