@@ -6,6 +6,7 @@ import { ProtectedRoute } from "../utils/ProtectedRoute";
 export enum Routes {
   SIGNUP = "/signup",
   LOGIN = "/login",
+  HOME = "/home",
 }
 
 export const routes = [

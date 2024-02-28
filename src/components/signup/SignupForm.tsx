@@ -1,4 +1,4 @@
-import { registerUser } from "../../services/userService";
+import { registerUser } from "services/userService";
 import ButtonComponent from "../common/ButtonComponent";
 import { FormEvent, useState } from "react";
 import InputField from "../common/InputField";
@@ -52,8 +52,7 @@ function SignUpForm() {
       };
 
       try {
-        const response = await registerUser(formData);
-        console.log(response);
+        await registerUser(formData);
         setRegistrationSuccess(true);
         // Redirect to confirmation sent page
       } catch (error) {
@@ -67,7 +66,7 @@ function SignUpForm() {
 
   return (
     <form>
-      <div className="flex w-[180px] max-w-full flex-col mt-20 self-end max-md:mt-10 mb-8">
+      <div className="flex w-[11.2rem] max-w-full flex-col mt-20 self-end max-md:mt-10 mb-8">
         <div className="text-black text-3xl font-bold tracking-[3px] self-center">
           SIGN UP
         </div>
@@ -114,7 +113,7 @@ function SignUpForm() {
           <label htmlFor="gender"> GENDER </label>
           <select
             id="gender"
-            className="self-stretch flex h-[37px] flex-col mt-1.5 border-[0.5px] border-solid border-black w-[175px] shrink-0 text-sm p-2"
+            className="self-stretch flex h-[2.3rem] flex-col mt-1.5 border-[0.5px] border-solid border-black w-[10.9rem] shrink-0 text-sm p-2"
             aria-label="Gender"
             onChange={(e) => handleUserData(e, "gender")}
           >

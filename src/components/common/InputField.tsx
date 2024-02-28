@@ -21,7 +21,7 @@ const InputField = ({
       <input
         id={htmlLabel}
         type={type}
-        className="self-stretch flex shrink-0 h-[37px] flex-col mt-2 border-[0.5px] border-solid border-zinc-950 p-3"
+        className="self-stretch flex shrink-0 h-[2.3rem] flex-col mt-2 border-[0.5px] border-solid border-zinc-950 p-3"
         aria-label="Name"
         onChange={onChange}
         autoComplete={autocomplete}
