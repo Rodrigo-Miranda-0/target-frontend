@@ -8,6 +8,7 @@ export enum Routes {
   SIGNUP = "/signup",
   LOGIN = "/login",
   CONFIRMATION = "/confirmation",
+  HOME = "/home",
 }
 
 export const routes = [

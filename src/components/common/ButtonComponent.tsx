@@ -14,7 +14,7 @@ const ButtonComponent = ({
 }: ButtonComponentProps) => {
   return (
     <button
-      className={`text-white text-center text-xs font-semibold bg-black self-center w-[185px] max-w-full justify-center items-center mt-6 px-16 py-4 max-md:px-5 disabled:opacity-30 ${className}`}
+      className={`text-white text-center text-xs font-semibold bg-black self-center w-[11.5rem] max-w-full justify-center items-center mt-6 px-16 py-4 max-md:px-5 disabled:opacity-30 ${className}`}
       onClick={onClick}
       disabled={disabled}
     >
