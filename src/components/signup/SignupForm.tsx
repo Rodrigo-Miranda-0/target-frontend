@@ -1,8 +1,9 @@
-import { registerUser } from "services/userService";
+import { registerUser } from "@services/userService";
 import ButtonComponent from "../common/ButtonComponent";
 import { FormEvent, useState } from "react";
 import InputField from "../common/InputField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Routes } from "@routes/router";
 
 function SignUpForm() {
   const [userData, setUserData] = useState({
@@ -18,6 +19,7 @@ function SignUpForm() {
   const [error, setError] = useState(false);
   const [registrationError, setRegistrationError] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const handleUserData = (
     e: FormEvent<HTMLInputElement | HTMLSelectElement>,
@@ -54,7 +56,7 @@ function SignUpForm() {
       try {
         await registerUser(formData);
         setRegistrationSuccess(true);
-        // Redirect to confirmation sent page
+        navigate(Routes.CONFIRMATION);
       } catch (error) {
         console.error(error);
         setRegistrationError(true);
