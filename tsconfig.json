@@ -25,7 +25,8 @@
     "paths": {
       "@components/*": ["components/*"],
       "@pages/*": ["pages/*"],
-      "@services/*": ["services/*"]
+      "@services/*": ["services/*"],
+      "@routes/*": ["routes/*"]
     }
   },
   "include": ["src", "src/custom.d.ts"],

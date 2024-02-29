@@ -13,8 +13,8 @@ const ConfirmationPanel = () => {
       <p className="text-neutral-800 text-lg font-semibold leading-8 mt-4 self-center">
         Only one more step to start enjoying
       </p>
-      <p className="text-neutral-800 text-lg font-semibold leading-8 mt-4 self-center">
-        T A R G E T
+      <p className="text-neutral-800 text-lg font-semibold leading-8 mt-4 self-center tracking-widest">
+        TARGET
       </p>
       <p className="text-neutral-800 text-sm leading-8 mt-7 self-center">
         We’ve sent an email to confirm your account.

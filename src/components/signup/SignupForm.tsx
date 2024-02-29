@@ -1,8 +1,9 @@
-import { registerUser } from "services/userService";
+import { registerUser } from "@services/userService";
 import ButtonComponent from "../common/ButtonComponent";
 import { FormEvent, useState } from "react";
 import InputField from "../common/InputField";
 import { Link, useNavigate } from "react-router-dom";
+import { Routes } from "@routes/router";
 
 function SignUpForm() {
   const [userData, setUserData] = useState({
@@ -55,7 +56,7 @@ function SignUpForm() {
       try {
         await registerUser(formData);
         setRegistrationSuccess(true);
-        navigate("/confirmation");
+        navigate(Routes.CONFIRMATION);
       } catch (error) {
         console.error(error);
         setRegistrationError(true);
